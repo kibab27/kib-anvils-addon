@@ -38,7 +38,7 @@ export class Anvil {
                     if (hit && !hit.block.isAir && !hit.block.isLiquid) {
                         const begin = hit.block.location;
                         const end = hit.block.location;
-                        world.getDimension('overworld').runCommand(`fill ${begin.x} ${begin.y} ${begin.z} ${end.x} ${end.y} ${end.z} minecraft:air replace minecraft:anvil`);
+                        world.getDimension('overworld').runCommand(`fill ${begin.x} ${begin.y + 1} ${begin.z} ${end.x} ${end.y} ${end.z} minecraft:air replace minecraft:anvil`);
     
                         // Spawn particles along the path from the current y level to 5 blocks above
                         for (let i = hit.block.location.y; i <= hit.block.location.y + 1; i++) {
@@ -52,7 +52,7 @@ export class Anvil {
     
             // Wait for all the promises to complete
             Promise.all(promises).then(() => {
-                console.log('All anvils have been cleaned up.');
+                console.warn('All anvils have been cleaned up.');
             }).catch(error => {
                 console.error('Error during cleanup: ', error);
             });

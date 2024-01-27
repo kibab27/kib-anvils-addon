@@ -37,7 +37,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
     handleCommand(cmd, args, joinedArgs, sender);
   });
 
-
+  const anvils = []; 
 
 const handleCommand = (cmd, args, msg, sender) => {
 
@@ -45,11 +45,26 @@ const handleCommand = (cmd, args, msg, sender) => {
         sender.runCommandAsync(`tellraw @s {"rawtext":[{"text":"${message}"}]}`);
       };
 
-    const commandHandlers = {
+      
+      const commandHandlers = {
         info: () => {
             const myAnvil = new Anvil(10, sender.location.y + 50);
             console.warn(myAnvil.placeAnvils(sender.location.x, sender.location.z)); // Prints the number of blocks placed
-            myAnvil.cleanUp(20);
+            myAnvil.cleanUp(5);
+        },
+
+        spawn: () => {
+              const anvil = new Anvil(10, sender.location.y + 50); 
+              anvils.push(anvil);
+              anvil.placeAnvils(sender.location.x, sender.location.z);
+        },
+
+        clean: () => {
+            for (const av of anvils) {
+              av.cleanUp(0);
+            }
+
+            anvils.length = 0;
         }
     };
 
