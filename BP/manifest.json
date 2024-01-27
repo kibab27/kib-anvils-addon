@@ -1,0 +1,67 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"kibab2396"
+		],
+		"generated_with": {
+			"bridge": [
+				"2.7.4"
+			],
+			"dash": [
+				"github:bridge-core/dash-compiler#8fa35c73292f6382747d0f411fca26431a6d2c8e"
+			]
+		}
+	},
+	"header": {
+		"name": "anvils fall addon recreation",
+		"description": "",
+		"min_engine_version": [
+			1,
+			20,
+			50
+		],
+		"uuid": "3f7333f1-c6dc-4f55-b0ab-1bc792480a62",
+		"version": [
+			1,
+			0,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "d7a68dcd-8186-4a21-8803-3b618e8197c2",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"type": "script",
+			"language": "javascript",
+			"uuid": "a760add4-0965-420e-8216-8a9d3f9818a7",
+			"entry": "scripts/main.js",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "25d670d5-a3ff-4d0a-b328-4f92ba30d7ae",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"module_name": "@minecraft/server",
+			"version": "1.8.0-beta"
+		}
+	]
+}
