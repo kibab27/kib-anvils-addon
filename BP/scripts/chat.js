@@ -37,7 +37,15 @@ world.beforeEvents.chatSend.subscribe((data) => {
     handleCommand(cmd, args, joinedArgs, sender);
   });
 
-  const anvils = []; 
+  export const anvils = []; 
+
+  export function addAnviltoArr(anvil) {
+    anvils.push(anvil);
+  }
+
+  export function clearArr() {
+    anvils.length = 0;
+  }
 
 const handleCommand = (cmd, args, msg, sender) => {
 

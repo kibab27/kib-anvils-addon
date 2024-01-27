@@ -40,9 +40,8 @@ export class Anvil {
                         const end = hit.block.location;
                         world.getDimension('overworld').runCommand(`fill ${begin.x} ${begin.y + 1} ${begin.z} ${end.x} ${end.y} ${end.z} minecraft:air replace minecraft:anvil`);
     
-                        // Spawn particles along the path from the current y level to 5 blocks above
-                        for (let i = hit.block.location.y; i <= hit.block.location.y + 1; i++) {
-                            world.getDimension('overworld').spawnParticle('minecraft:endrod', {x: hit.block.location.x, y: i, z: hit.block.location.z});
+                        for (let i = hit.block.location.y; i <= hit.block.location.y + 2; i++) {
+                            world.getDimension('overworld').spawnParticle('minecraft:basic_smoke_particle', {x: hit.block.location.x, y: i, z: hit.block.location.z});
                         }
                     }
     
