@@ -49,7 +49,7 @@ const handleCommand = (cmd, args, msg, sender) => {
         info: () => {
             const myAnvil = new Anvil(10, sender.location.y + 50);
             console.warn(myAnvil.placeAnvils(sender.location.x, sender.location.z)); // Prints the number of blocks placed
-            myAnvil.cleanUp(5);
+            myAnvil.cleanUp(20);
         }
     };
 

@@ -21,35 +21,47 @@ export class Anvil {
         return world.getDimension('overworld').fillBlocks(begin, end, 'minecraft:anvil');
     }
 
-cleanUp(delayInSeconds) {
-    // Convert the delay to ticks (Minecraft runs at 20 ticks per second)
-    const delayInTicks = delayInSeconds * 20;
+    cleanUp(delayInSeconds) {
+        // Convert the delay to ticks (Minecraft runs at 20 ticks per second)
+        const delayInTicks = delayInSeconds * 20;
+    
+        // Schedule the cleanup function to run after the delay
+        system.runTimeout(() => {
+            // Create a promise for each anvil
+            const promises = this.placedPositions.map(position => {
+                return new Promise((resolve, reject) => {
+                    // Start scanning from the anvil position downwards
+                    let direction = new Vector(0, -1, 0);
+                    let hit = world.getDimension('overworld').getBlockFromRay(position, direction);
+    
+                    // If a non-air block was found, replace it with air
+                    if (hit && !hit.block.isAir && !hit.block.isLiquid) {
+                        const begin = hit.block.location;
+                        const end = hit.block.location;
+                        world.getDimension('overworld').runCommand(`fill ${begin.x} ${begin.y} ${begin.z} ${end.x} ${end.y} ${end.z} minecraft:air replace minecraft:anvil`);
+    
+                        // Spawn particles along the path from the current y level to 5 blocks above
+                        for (let i = hit.block.location.y; i <= hit.block.location.y + 1; i++) {
+                            world.getDimension('overworld').spawnParticle('minecraft:endrod', {x: hit.block.location.x, y: i, z: hit.block.location.z});
+                        }
+                    }
+    
+                    resolve();
+                });
+            });
+    
+            // Wait for all the promises to complete
+            Promise.all(promises).then(() => {
+                console.log('All anvils have been cleaned up.');
+            }).catch(error => {
+                console.error('Error during cleanup: ', error);
+            });
+        }, delayInTicks);
+    }
+    
+    
 
-    // Schedule the cleanup function to run after the delay
-    system.runTimeout(() => {
-        this.placedPositions.forEach(position => {
-            let y = position.y;
-            let block;
-            do {
-                block = world.getDimension('overworld').getBlock(new Vector(position.x, --y, position.z));
-                
-            } while (block && block.isAir || block && block.isLiquid);
-            
-            // If a non-air block was found, replace it with air
-            if (block) {
-                const begin = new Vector(position.x, y, position.z);
-                const end = new Vector(position.x, y, position.z);
-                world.getDimension('overworld').fillBlocks(begin, end, 'minecraft:air');
-            
-                // Spawn particles along the path from the current y level to 5 blocks above
-                for (let i = y; i <= y + 5; i++) {
-                    world.getDimension('overworld').spawnParticle('minecraft:endrod', {x: position.x, y: i, z: position.z});
-                }
-            }
-            
-        });
-    }, delayInTicks);
-}
+    
 
     
     
