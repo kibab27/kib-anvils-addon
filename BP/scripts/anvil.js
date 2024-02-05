@@ -22,7 +22,6 @@ export class Anvil {
     }
 
     cleanUp(delayInSeconds) {
-        // Convert the delay to ticks (Minecraft runs at 20 ticks per second)
         const delayInTicks = delayInSeconds * 20;
     
         // Schedule the cleanup function to run after the delay
